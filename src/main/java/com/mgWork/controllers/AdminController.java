@@ -11,14 +11,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.dto.AuthModel;
 import com.mgWork.dto.CustomerDto;
+import com.mgWork.entitys.Authority;
 import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Jwtresponse;
 import com.mgWork.security.CustomUserDetailsService;
 import com.mgWork.service.AdminService;
+import com.mgWork.service.AuthorityService;
 import com.mgWork.service.CustomerService;
 import com.mgWork.util.JwtTokenUtil;
 
@@ -35,6 +38,8 @@ public class AdminController {
 	private CustomUserDetailsService customUserDetailsService;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private AuthorityService authorityService;
 
 	@PostMapping("/register")
 	public ResponseEntity<Customer> registerAdmin(@RequestBody CustomerDto admin) {
@@ -68,6 +73,15 @@ public class AdminController {
 		} catch (BadCredentialsException e) {
 			throw new Exception("bad credentals");
 		}
+
+	}
+
+	@PostMapping("/auth")
+	public ResponseEntity<Authority> saveAuthority(@RequestBody Authority authority, @RequestParam String p) {
+		if (p.equalsIgnoreCase("auth-dxc"))
+			return new ResponseEntity<Authority>(authorityService.addAuthority(authority), HttpStatus.CREATED);
+		else
+			throw new RuntimeException("invalid param code : " + p);
 
 	}
 
