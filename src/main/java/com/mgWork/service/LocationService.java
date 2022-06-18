@@ -12,4 +12,6 @@ public interface LocationService {
 	Location updateLocation(Long id,Location location);
 
 	void locationService(Long id);
+
+	
 }
