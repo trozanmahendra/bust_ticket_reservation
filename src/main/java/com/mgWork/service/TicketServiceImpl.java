@@ -79,7 +79,11 @@ public class TicketServiceImpl implements TicketService {
 				if (seatsAvail >= 0) {
 					Bus buss = busRepository.findById(bus.getBus_id()).get();
 					buss.setSeatsAvailable(seatsAvail);
-					busRepository.save(buss);
+					try {
+						busRepository.save(buss);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					ticket.setStatus("active");
 					System.out.println(ticket+"-------------------");
 					return ticketRepo.save(ticket);
