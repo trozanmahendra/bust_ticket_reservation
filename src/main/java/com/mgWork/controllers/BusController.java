@@ -45,6 +45,10 @@ public class BusController {
 		busService.deleteBus(bus_id);
 		return new ResponseEntity<String>("Bus deleted successfully with id : "+bus_id,HttpStatus.OK);
 	}
+	@GetMapping("/listallbuses")
+	public ResponseEntity<List<Bus>> listBuses(){
+		return new ResponseEntity<List<Bus>>(busService.findAllBuses(),HttpStatus.ACCEPTED);
+	}
 	
 }
 

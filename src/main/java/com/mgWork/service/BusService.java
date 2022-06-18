@@ -3,6 +3,7 @@ package com.mgWork.service;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 
 import com.mgWork.entitys.Bus;
 
@@ -17,4 +18,6 @@ public interface BusService {
 	Bus Updatebus(Long bus_id, Bus bus);
 
 	void deleteBus(Long bus_id);
+
+	List<Bus> findAllBuses();
 }

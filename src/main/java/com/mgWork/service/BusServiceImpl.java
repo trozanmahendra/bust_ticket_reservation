@@ -67,4 +67,9 @@ public class BusServiceImpl implements BusService {
 		busRepo.deleteById(bus_id);
 
 	}
+	@Override
+	public List<Bus> findAllBuses() {
+		
+		return busRepo.findAll();
+	}
 }
