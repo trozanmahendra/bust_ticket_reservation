@@ -81,6 +81,7 @@ public class TicketServiceImpl implements TicketService {
 					buss.setSeatsAvailable(seatsAvail);
 					busRepository.save(buss);
 					ticket.setStatus("active");
+					System.out.println(ticket+"-------------------");
 					return ticketRepo.save(ticket);
 				} else
 					throw new RuntimeException(" No seats available");
