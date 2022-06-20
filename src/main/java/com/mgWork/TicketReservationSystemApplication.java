@@ -64,7 +64,7 @@ public class TicketReservationSystemApplication {
 
 			}
 //			while explaining makr diff=0
-			if (diff <= 7 || iscancelled) {
+			if (diff <= 7 && iscancelled) {
 				System.out.println("deleted tickets which are expired and cancelled older than 7 days");
 			ticketRepo.delete(tickets.get(i));
 			}
