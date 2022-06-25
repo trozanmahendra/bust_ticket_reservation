@@ -85,6 +85,8 @@ public class TicketServiceImpl implements TicketService {
 						e.printStackTrace();
 					}
 					ticket.setStatus("active");
+					float tkt_fare = buss.getTkt_fare();
+					ticket.setTotal_fare(tkt_fare*pids.size());
 //					System.out.println(ticket+"-------------------");
 					return ticketRepo.save(ticket);
 				} else

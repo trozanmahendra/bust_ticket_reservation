@@ -2,23 +2,24 @@ server:
   servlet:
     context-path: /api/v1
 #  port: 5000
-#spring:
-#  datasource:
-#    password: 12345
-#    url: jdbc:mysql://localhost:3306/tkt_bkng?createDatabaseIfNotExist=true
-#    username: mg
+spring:
+  datasource:
+    password: 12345
+    url: jdbc:mysql://localhost:3306/tkt_bkng?createDatabaseIfNotExist=true
+    username: mg
+
 #Amazon aws
 #spring:
 #  datasource:
 #    password: 12345678
 #    url: jdbc:mysql://mgdb.ckjckuer8nk1.us-east-1.rds.amazonaws.com:3306/tkt_bkng?createDatabaseIfNotExist=true
 #    username: mg
-spring:
-  datasource:
-    password: ${JDBC_DATABASE_PASSWORD}
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    driver-class-name: org.postgresql.Driver
+#spring:
+#  datasource:
+#    password: ${JDBC_DATABASE_PASSWORD}
+#    url: ${JDBC_DATABASE_URL}
+#    username: ${JDBC_DATABASE_USERNAME}
+#    driver-class-name: org.postgresql.Driver
 
 #spring:
 #  datasource:
@@ -33,6 +34,14 @@ spring:
     show-sql: true
   main:
     allow-bean-definition-overriding: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
 jwt:
  secret: mg123
     
