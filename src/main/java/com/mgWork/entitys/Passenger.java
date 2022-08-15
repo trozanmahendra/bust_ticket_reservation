@@ -26,9 +26,9 @@ public class Passenger implements Serializable {
 	
 	private long id;
 	@Column(nullable = false)
-	private String psngr_name;
+	private String psngrName;
 	@Column(nullable = false)
-	private int psngr_age;
+	private int psngrAge;
 	@Column(nullable = false)
 	@JsonIgnore
 	private Long customerId;
@@ -37,7 +37,7 @@ public class Passenger implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Passenger [psngr_name=" + psngr_name + ", psngr_age=" + psngr_age + "]";
+		return "Passenger [psngr_name=" + psngrName + ", psngr_age=" + psngrAge + "]";
 	}
 
 }
