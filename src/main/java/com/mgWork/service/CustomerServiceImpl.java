@@ -28,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
 		System.out.println(customerDto);
 		BeanUtils.copyProperties(customerDto, customer);
 		customer.setPassword(encoder.encode(customer.getPassword()));
+		customer.setAdminCode("dxc-bus-user");
 		customer.setAuthority(authorityRepository.findById((long) 2).get());
 		return customerRepo.save(customer);
 	}
