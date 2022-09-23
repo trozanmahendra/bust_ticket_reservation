@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,7 @@ import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Jwtresponse;
 import com.mgWork.entitys.Location;
 import com.mgWork.entitys.SubLocation;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.repository.LocationRepository;
 import com.mgWork.security.CustomUserDetailsService;
 import com.mgWork.service.BusService;
@@ -39,32 +39,38 @@ import com.mgWork.util.JwtTokenUtil;
 @RestController
 @RequestMapping("/cust")
 public class CustomerController {
-	@Autowired
-	private CustomerService customerService;
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	@Autowired
-	private BusService busService;
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
-	@Autowired
-	private LocationRepository locationRepository;
-	@Autowired
-	private SubLocationService subLocationService;
-	@Autowired
-	private LocationService locationService;
+	private final CustomerService customerService;
+	private final AuthenticationManager authenticationManager;
+	private final BusService busService;
+	private final JwtTokenUtil jwtTokenUtil;
+	private final CustomUserDetailsService customUserDetailsService;
+	private final LocationRepository locationRepository;
+	private final SubLocationService subLocationService;
+	private final LocationService locationService;
+
+	
+	public CustomerController(CustomerService customerService, AuthenticationManager authenticationManager, BusService busService, JwtTokenUtil jwtTokenUtil, CustomUserDetailsService customUserDetailsService, LocationRepository locationRepository, SubLocationService subLocationService, LocationService locationService) {
+		this.customerService = customerService;
+		this.authenticationManager = authenticationManager;
+		this.busService = busService;
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.customUserDetailsService = customUserDetailsService;
+		this.locationRepository = locationRepository;
+		this.subLocationService = subLocationService;
+		this.locationService = locationService;
+	}
 
 	@PostMapping("/register")
 	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody CustomerDto customerdto) {
-		return new ResponseEntity<Customer>(customerService.saveCustomer(customerdto), HttpStatus.CREATED);
+		MgLogger.logAudit("saveCustomer method invoked from controller");
+		return new ResponseEntity<>(customerService.saveCustomer(customerdto), HttpStatus.CREATED);
 
 	}
 
 	@GetMapping("/searchroutes")
 	public List<Bus> searchBusesByOriginAndDestination(@RequestParam String origin, @RequestParam String destination,
 			Pageable pageable) {
+		MgLogger.logAudit("searchBusesByOriginAndDestination method invoked from controller");
 
 		return busService.searchBusesByOriginAndDestination(origin, destination, pageable);
 
@@ -72,6 +78,7 @@ public class CustomerController {
 
 	@PostMapping("/login")
 	public ResponseEntity<Jwtresponse> loginCustomer(@RequestBody AuthModel authModel) throws Exception {
+		MgLogger.logAudit("loginCustomer method invoked from controller");
 
 		authenticate(authModel.getName(), authModel.getPassword());
 
@@ -82,11 +89,12 @@ public class CustomerController {
 	}
 
 	private void authenticate(String name, String password) throws Exception {
+		MgLogger.logAudit("authenticate method invoked from controller");
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, password));
 
 		} catch (DisabledException e) {
-
+			MgLogger.logError("User disabled",new Exception("User disabled"));
 			throw new Exception("User disabled");
 		} catch (BadCredentialsException e) {
 			throw new Exception("bad credentals");
@@ -96,6 +104,7 @@ public class CustomerController {
 
 	@GetMapping("/listsublocations/{location}")
 	public ResponseEntity<List<SubLocation>> listSublocationByLocation(@PathVariable String location) {
+		MgLogger.logAudit("listSublocationByLocation method invoked from controller");
 
 		Location loc = locationRepository.findByLocation(location);
 
@@ -105,6 +114,7 @@ public class CustomerController {
 
 	@GetMapping("/listlocations")
 	public ResponseEntity<List<Location>> listOfLocations() {
+		MgLogger.logAudit("listOfLocations method invoked from controller");
 		return new ResponseEntity<List<Location>>(locationService.listLocations(), HttpStatus.OK);
 
 	}

@@ -1,6 +1,5 @@
 package com.mgWork.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +18,7 @@ import com.mgWork.dto.CustomerDto;
 import com.mgWork.entitys.Authority;
 import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Jwtresponse;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.security.CustomUserDetailsService;
 import com.mgWork.service.AdminService;
 import com.mgWork.service.AuthorityService;
@@ -28,21 +28,29 @@ import com.mgWork.util.JwtTokenUtil;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-	@Autowired
+
 	private CustomerService customerService;
-	@Autowired
 	private AuthenticationManager authenticationManager;
-	@Autowired
 	private AdminService adminService;
-	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	@Autowired
 	private AuthorityService authorityService;
+
+	public AdminController(CustomerService customerService, AuthenticationManager authenticationManager,
+			AdminService adminService, CustomUserDetailsService customUserDetailsService, JwtTokenUtil jwtTokenUtil,
+			AuthorityService authorityService) {
+		super();
+		this.customerService = customerService;
+		this.authenticationManager = authenticationManager;
+		this.adminService = adminService;
+		this.customUserDetailsService = customUserDetailsService;
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.authorityService = authorityService;
+	}
 
 	@PostMapping("/register")
 	public ResponseEntity<Customer> registerAdmin(@RequestBody CustomerDto admin) {
+		MgLogger.logAudit("registerAdmin method invoked");
 		return new ResponseEntity<Customer>(adminService.saveAdmin(admin), HttpStatus.CREATED);
 
 	}
@@ -50,6 +58,7 @@ public class AdminController {
 	@PostMapping("/login")
 	public ResponseEntity<Jwtresponse> loginCustomer(@RequestBody AuthModel authModel) throws Exception {
 
+		MgLogger.logAudit("loginCustomer method invoked");
 		authenticate(authModel.getName(), authModel.getPassword());
 
 		final UserDetails details = customUserDetailsService.loadUserByUsername(authModel.getName());
@@ -59,6 +68,8 @@ public class AdminController {
 		if (customerService.findByName(authModel.getName()).getAdminCode() != null) {
 			return new ResponseEntity<Jwtresponse>(new Jwtresponse(token), HttpStatus.OK);
 		} else {
+			MgLogger.logError("please register as admin or login as customer",
+					new RuntimeException("please register as admin or login as customer"));
 			throw new RuntimeException("please register as admin or login as customer");
 		}
 	}
@@ -68,20 +79,24 @@ public class AdminController {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, password));
 
 		} catch (DisabledException e) {
-
-			throw new Exception("User disabled");
+			MgLogger.logError("User disabled", new Exception("User disabled"));
+//			throw new Exception("User disabled");
 		} catch (BadCredentialsException e) {
-			throw new Exception("bad credentals");
+			MgLogger.logError("bad credentals", new BadCredentialsException("bad credentals"));
+//			throw new Exception("bad credentals");
 		}
 
 	}
 
 	@PostMapping("/auth")
 	public ResponseEntity<Authority> saveAuthority(@RequestBody Authority authority, @RequestParam String p) {
-		if (p.equalsIgnoreCase("auth-dxc"))
+		MgLogger.logAudit("saveAuthority method invoked");
+		if (p.equalsIgnoreCase("auth-dxc")) {
 			return new ResponseEntity<Authority>(authorityService.addAuthority(authority), HttpStatus.CREATED);
-		else
+		} else {
+			MgLogger.logError("invalid param code : " + p, new RuntimeException("invalid param code : " + p));
 			throw new RuntimeException("invalid param code : " + p);
+		}
 
 	}
 

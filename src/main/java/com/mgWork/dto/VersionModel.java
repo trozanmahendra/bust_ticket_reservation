@@ -6,4 +6,6 @@ import lombok.Data;
 public class VersionModel {
 
 	private String version;
+
+	
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.entitys.Bus;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.service.BusService;
 
 @RestController
@@ -30,23 +31,28 @@ public class BusController {
 	
 	@PostMapping("/addbus")
 	public ResponseEntity<Bus> saveBus(@Valid @RequestBody Bus bus){
+		MgLogger.logAudit("saveBus method invoked");
 		return new ResponseEntity<Bus>(busService.saveBus(bus),HttpStatus.CREATED);
 	}
 	@GetMapping("/buses")
 	public List<Bus> busList(Bus bus,Pageable pageable){
+		MgLogger.logAudit("busList method invoked");
 		return busService.busList(bus, pageable);
 	}
 	@PutMapping("/updatebus")
 	public ResponseEntity<Bus> updateBus(@Valid @RequestParam Long bus_id,@RequestBody Bus bus) {
+		MgLogger.logAudit("updateBus method invoked");
 		return new ResponseEntity<Bus>(busService.Updatebus(bus_id,bus),HttpStatus.ACCEPTED);
 	}
 	@DeleteMapping("/deletebus")
 	public ResponseEntity<String> deleteBus(@RequestParam Long bus_id){
+		MgLogger.logAudit("deleteBus method invoked");
 		busService.deleteBus(bus_id);
 		return new ResponseEntity<String>("Bus deleted successfully with id : "+bus_id,HttpStatus.OK);
 	}
 	@GetMapping("/listallbuses")
 	public ResponseEntity<List<Bus>> listBuses(){
+		MgLogger.logAudit("listBuses method invoked");
 		return new ResponseEntity<List<Bus>>(busService.findAllBuses(),HttpStatus.ACCEPTED);
 	}
 	

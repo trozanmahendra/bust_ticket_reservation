@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.mgWork.logger.MgLogger;
 import com.mgWork.util.JwtTokenUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -27,6 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		MgLogger.logAudit("com.mgWork.security.JwtRequestFilter.doFilterInternal  method invoked");
 		final String requestTokenHeader = request.getHeader("Authorization");
 
 		String jwtToken = null;
@@ -40,9 +42,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				username = jwtTokenUtil.getUserNameFromToken(jwtToken);
 //				System.out.println("------username---------"+username+"---------------------");
 			} catch (IllegalArgumentException e) {
+				MgLogger.logError("Unable to get JWT token",new RuntimeException("Unable to get JWT token"));
 				throw new RuntimeException("Unable to get JWT token");
 
 			} catch (ExpiredJwtException e) {
+				MgLogger.logError("Expired JWT token",new RuntimeException("Expired JWT token"));
 				throw new RuntimeException("Expired JWT token");
 			}
 		}

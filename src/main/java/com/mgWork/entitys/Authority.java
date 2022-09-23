@@ -24,5 +24,6 @@ public class Authority {
 //	@JsonIgnore
 	private Long id;
 	private String authority;
+	
 
 }

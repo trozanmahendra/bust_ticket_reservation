@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mgWork.entitys.Bus;
@@ -16,6 +15,7 @@ import com.mgWork.entitys.Location;
 import com.mgWork.entitys.Passenger;
 import com.mgWork.entitys.SubLocation;
 import com.mgWork.entitys.Ticket;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.repository.BusRepository;
 import com.mgWork.repository.CustomerRepository;
 import com.mgWork.repository.LocationRepository;
@@ -27,26 +27,40 @@ import com.mgWork.repository.TicketRepository;
 @Transactional
 public class TicketServiceImpl implements TicketService {
 
-	@Autowired
 	private TicketRepository ticketRepo;
-	@Autowired
+
 	private BusRepository busRepository;
-	@Autowired
+
 	private CustomerRepository customerRepository;
-	@Autowired
+
 	private PassengerRepository passengerRepository;
-	@Autowired
+
 	private CustomerService customerService;
-	@Autowired
+
 	private LocationRepository locationRepository;
-	@Autowired
+
 	private SubLocationRepository subLocationRepository;
-	@Autowired
+
 	private Date date;
+
+	public TicketServiceImpl(TicketRepository ticketRepo, BusRepository busRepository,
+			CustomerRepository customerRepository, PassengerRepository passengerRepository,
+			CustomerService customerService, LocationRepository locationRepository,
+			SubLocationRepository subLocationRepository, Date date) {
+		super();
+		this.ticketRepo = ticketRepo;
+		this.busRepository = busRepository;
+		this.customerRepository = customerRepository;
+		this.passengerRepository = passengerRepository;
+		this.customerService = customerService;
+		this.locationRepository = locationRepository;
+		this.subLocationRepository = subLocationRepository;
+		this.date = date;
+	}
 
 	@Override
 	public Ticket saveTicket(Ticket ticket) {
-
+		MgLogger.logAudit("com.mgWork.service.TicketServiceImpl.saveTicket(Ticket) method invoked");
 		Customer customer = customerService.getLoggedInCustomer();
 
 		ticket.setCustId(customer.getId());
@@ -86,7 +100,7 @@ public class TicketServiceImpl implements TicketService {
 					}
 					ticket.setStatus("active");
 					float tkt_fare = buss.getTkt_fare();
-					ticket.setTotal_fare(tkt_fare*pids.size());
+					ticket.setTotal_fare(tkt_fare * pids.size());
 //					System.out.println(ticket+"-------------------");
 					return ticketRepo.save(ticket);
 				} else
@@ -101,6 +115,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public Ticket saveCancelledTicket(String tktId, Ticket ticket) throws ParseException {
+		MgLogger.logAudit("com.mgWork.service.TicketServiceImpl.saveCancelledTicket(String, Ticket) method invoked");
 		ticket = ticketRepo.findByTktId(tktId).get();
 		ticket.setStatus("cancelled");
 		Bus bus = busRepository.findByRegId(ticket.getBus_reg_id()).get();
@@ -122,6 +137,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public List<Ticket> showTickets() {
+		MgLogger.logAudit("com.mgWork.service.TicketServiceImpl.showTickets() method invoked");
 		Customer customer = customerService.getLoggedInCustomer();
 
 		List<Ticket> tickets = ticketRepo.findByCustomerId(customer.getId());
@@ -144,6 +160,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public Ticket getTicket(String id) {
+		MgLogger.logAudit("com.mgWork.service.TicketServiceImpl.getTicket(String) method invoked");
 		Customer customer = customerService.getLoggedInCustomer();
 		if (customer.getId() == ticketRepo.findByTktId(id).get().getCustId())
 			return ticketRepo.findByTktId(id).get();

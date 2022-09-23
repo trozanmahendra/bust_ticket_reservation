@@ -1,0 +1,169 @@
+#rootLogger:
+#  level: info
+#  appenderRefs: DEBUG_LOGGER, AUDIT_LOGGER, ERROR_LOGGER, INFO_LOGGER, console
+#  appenderRef:
+#    console:
+#      ref: STDOUT
+#loggers: DEBUG, ERROR, AUDIT, INFO
+#property:
+#  filename: logs
+#  basePath: log/COA_AUDIT_1/
+#appenders: DEBUG_LOGGER, console, ERROR_LOGGER, AUDIT_LOGGER, INFO_LOGGER
+#status: warn
+
+appender:
+  console:
+    type: Console
+    layout:
+      pattern: '[%d] [%-5p] [%c] %x %m%n'
+      type: PatternLayout
+    name: STDOUT
+  ERROR_LOGGER:
+    policies:
+      size:
+        type: SizeBasedTriggeringPolicy
+        size: 50MB
+      time:
+        type: TimeBasedTriggeringPolicy
+        interval: '1'
+        modulate: 'true'
+      type: Policies
+    layout:
+      type: PatternLayout
+      pattern: '[%d] [%-5p] [%c] %m%n'
+    strategy:
+      type: DefaultRolloverStrategy
+      max: '10'
+    filter:
+      threshold:
+        minLevel: error
+        type: LevelRangeFilter
+        maxLevel: error
+    type: RollingFile
+    fileName: ${basePath}/error_log.out
+    name: ERROR
+    filePattern: ${basePath}/error_out-%d{yyyy-MM-dd}-%i.log
+  DEBUG_LOGGER:
+    policies:
+      type: Policies
+      time:
+        type: TimeBasedTriggeringPolicy
+        interval: '1'
+        modulate: 'true'
+      size:
+        size: 50MB
+        type: SizeBasedTriggeringPolicy
+    filter:
+      threshold:
+        maxLevel: debug
+        type: LevelRangeFilter
+        minLevel: debug
+    fileName: ${basePath}/debug_log.out
+    layout:
+      type: PatternLayout
+      pattern: '[%d] [%-5p] [%c] %m%n'
+    filePattern: ${basePath}/debug_out-%d{yyyy-MM-dd}-%i.log
+    name: DEBUG
+    strategy:
+      type: DefaultRolloverStrategy
+      max: '10'
+    type: RollingFile
+  AUDIT_LOGGER:
+    filter:
+      threshold:
+        maxLevel: info
+        type: LevelRangeFilter
+        minLevel: info
+    policies:
+      time:
+        interval: '10'
+        modulate: 'true'
+        type: TimeBasedTriggeringPolicy
+      size:
+        size: 50MB
+        type: SizeBasedTriggeringPolicy
+      type: Policies
+    name: AUDIT
+    fileName: ${basePath}/audit_log.out
+    layout:
+      type: PatternLayout
+      pattern: '[%d] [%-5p] [%c] %m%n'
+    strategy:
+      max: '10'
+      type: DefaultRolloverStrategy
+    filePattern: ${basePath}/audit_out-%d{yyyy-MM-dd-HH}-%i.log
+    type: RollingFile
+  INFO_LOGGER:
+    policies:
+      size:
+        size: 50MB
+        type: SizeBasedTriggeringPolicy
+      time:
+        modulate: 'true'
+        type: TimeBasedTriggeringPolicy
+        interval: '1'
+      type: Policies
+    fileName: ${basePath}/db_log.out
+    strategy:
+      max: '10'
+      type: DefaultRolloverStrategy
+    layout:
+      type: PatternLayout
+      pattern: '[%d] [%-5p] [%c] %m%n'
+    filePattern: ${basePath}/db_log-%d{yyyy-MM-dd}-%i.log
+    filter:
+      threshold:
+        minLevel: info
+        maxLevel: info
+        type: LevelRangeFilter
+    type: RollingFile
+    name: INFO
+property:
+  filename: logs
+  basePath: log/COA_AUDIT_1/
+rootLogger:
+  appenderRef:
+    AUDIT_LOGGER:
+      ref: AUDIT
+    DEBUG_LOGGER:
+      ref: DEBUG
+    INFO_LOGGER:
+      ref: INFO
+    console:
+      ref: STDOUT
+    ERROR_LOGGER:
+      ref: ERROR
+  level: info
+  appenderRefs: DEBUG_LOGGER, AUDIT_LOGGER, ERROR_LOGGER, INFO_LOGGER, console
+logger:
+  DEBUG:
+    name: com.coa
+    appenderRef:
+      rolling:
+        ref: DEBUG
+    additivity: 'false'
+    level: debug
+  ERROR:
+    name: com.coa
+    level: error
+    additivity: 'false'
+    appenderRef:
+      rolling:
+        ref: ERROR
+  INFO:
+    level: info
+    additivity: 'false'
+    appenderRef:
+      rolling:
+        ref: INFO
+    name: com.coa
+  AUDIT:
+    additivity: 'false'
+    level: info
+    name: com.coa
+    appenderRef:
+      rolling:
+        ref: AUDIT
+status: warn
+loggers: DEBUG, ERROR, AUDIT, INFO
+appenders: DEBUG_LOGGER, console, ERROR_LOGGER, AUDIT_LOGGER, INFO_LOGGER

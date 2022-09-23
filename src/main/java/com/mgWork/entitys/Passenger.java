@@ -23,7 +23,6 @@ public class Passenger implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private long id;
 	@Column(nullable = false)
 	private String psngrName;
@@ -39,5 +38,7 @@ public class Passenger implements Serializable {
 	public String toString() {
 		return "Passenger [psngr_name=" + psngrName + ", psngr_age=" + psngrAge + "]";
 	}
+
+	
 
 }

@@ -1,0 +1,27 @@
+[2022-09-24 00:33:07,041] [INFO ] [com.mgWork.TicketReservationSystemApplication] Starting TicketReservationSystemApplication using Java 11.0.15.1 on IN-5CG016FQ0X with PID 23264 (C:\Users\mteb\OneDrive - DXC Production\Desktop\omva-p&g\bust_ticket_reservation\target\classes started by mteb in C:\Users\mteb\OneDrive - DXC Production\Desktop\omva-p&g\bust_ticket_reservation)
+[2022-09-24 00:33:07,044] [INFO ] [com.mgWork.TicketReservationSystemApplication] No active profile set, falling back to 1 default profile: "default"
+[2022-09-24 00:33:07,966] [INFO ] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2022-09-24 00:33:08,073] [INFO ] [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 106 ms. Found 8 JPA repository interfaces.
+[2022-09-24 00:33:08,286] [INFO ] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+[2022-09-24 00:33:08,288] [INFO ] [org.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+[2022-09-24 00:33:08,288] [INFO ] [org.apache.catalina.core.StandardService] Starting service [Tomcat]
+[2022-09-24 00:33:08,289] [INFO ] [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.63]
+[2022-09-24 00:33:08,331] [INFO ] [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api/v1]] Initializing Spring embedded WebApplicationContext
+[2022-09-24 00:33:08,332] [INFO ] [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 1283 ms
+[2022-09-24 00:33:08,551] [INFO ] [org.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[2022-09-24 00:33:08,563] [INFO ] [com.zaxxer.hikari.HikariDataSource] HikariPool-3 - Starting...
+[2022-09-24 00:33:08,614] [INFO ] [com.zaxxer.hikari.HikariDataSource] HikariPool-3 - Start completed.
+[2022-09-24 00:33:08,614] [INFO ] [org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+[2022-09-24 00:33:08,912] [INFO ] [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2022-09-24 00:33:08,913] [INFO ] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2022-09-24 00:33:09,103] [INFO ] [org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor] Autowired annotation is not supported on static methods: public static void com.mgWork.TicketReservationSystemApplication.main(java.lang.String[])
+[2022-09-24 00:33:10,158] [INFO ] [org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver] Exposing 13 endpoint(s) beneath base path '/actuator'
+[2022-09-24 00:33:10,185] [INFO ] [org.springframework.security.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3cc41bd2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@495daf98, org.springframework.security.web.context.SecurityContextPersistenceFilter@7efe25c7, org.springframework.security.web.header.HeaderWriterFilter@10d9461c, org.springframework.security.web.authentication.logout.LogoutFilter@75f7e22a, com.mgWork.security.JwtRequestFilter@2569dad3, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7fec9a10, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2efbd061, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@74c88a04, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6a55d531, org.springframework.security.web.session.SessionManagementFilter@643d5a62, org.springframework.security.web.access.ExceptionTranslationFilter@c2b8fc6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4bed18ca]
+[2022-09-24 00:33:10,199] [INFO ] [org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer] LiveReload server is running on port 35729
+[2022-09-24 00:33:10,231] [INFO ] [org.apache.coyote.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8080"]
+[2022-09-24 00:33:10,247] [INFO ] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path '/api/v1'
+[2022-09-24 00:33:10,275] [INFO ] [com.mgWork.TicketReservationSystemApplication] Started TicketReservationSystemApplication in 3.359 seconds (JVM running for 412.4)
+[2022-09-24 00:33:10,286] [INFO ] [org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener] Condition evaluation unchanged
+[2022-09-24 00:33:10,289] [INFO ] [AUDIT_LOGGER] +++++++++++++++++++++++++++++++TicketReservationSystemApplication has started
+[2022-09-24 00:33:10,295] [INFO ] [AUDIT_LOGGER] +++++++++++++++++++++++++++++++ticketHourlyStatusUpdate has started
+[2022-09-24 00:33:10,296] [INFO ] [AUDIT_LOGGER] -----------------------ticketStatus updating-----------------------

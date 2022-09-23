@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Ticket;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.repository.BusRepository;
 import com.mgWork.repository.TicketRepository;
 
@@ -26,8 +27,8 @@ public class TicketReservationSystemApplication {
 	@Autowired
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(TicketReservationSystemApplication.class, args);
+		MgLogger.logAudit("+++++++++++++++++++++++++++++++TicketReservationSystemApplication has started");
 
 	}
 
@@ -45,7 +46,9 @@ public class TicketReservationSystemApplication {
 
 	@Scheduled(fixedDelay = 60 * 60 * 1000l)
 	public void ticketHourlyStatusUpdate() {
-		System.out.println("-----------------------ticketStatus updating-----------------------");
+		MgLogger.logAudit("+++++++++++++++++++++++++++++++ticketHourlyStatusUpdate has started");
+
+		MgLogger.logAudit("-----------------------ticketStatus updating-----------------------");
 		List<Ticket> tickets = ticketRepo.findAll();
 		Date firstDate = null;
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.entitys.Location;
 import com.mgWork.entitys.SubLocation;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.repository.LocationRepository;
 import com.mgWork.service.SubLocationService;
 
@@ -29,6 +30,7 @@ public class SubLocationController {
 
 	@PostMapping("/addsublocation")
 	public ResponseEntity<SubLocation> saveSubLocation(@RequestBody SubLocation subLocation) {
+		MgLogger.logAudit("saveSubLocation method invoked from controller");
 		return new ResponseEntity<SubLocation>(subLocationService.addSublocation(subLocation), HttpStatus.CREATED);
 
 	}
@@ -36,12 +38,14 @@ public class SubLocationController {
 	@PutMapping("/updatesublocation")
 	public ResponseEntity<SubLocation> updateSubLocation(@RequestBody SubLocation subLocation,
 			@RequestParam String location, @RequestParam String sublocation) {
+		MgLogger.logAudit("updateSubLocation method invoked from controller");
 		return new ResponseEntity<SubLocation>(subLocationService.UpdateSublocation(subLocation, location, sublocation),
 				HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/listsublocations/{location}")
 	public ResponseEntity<List<SubLocation>> listSublocationByLocation(@PathVariable String location) {
+		MgLogger.logAudit("listSublocationByLocation method invoked from controller");
 		
 		Location loc = locationRepository.findByLocation(location);
 	

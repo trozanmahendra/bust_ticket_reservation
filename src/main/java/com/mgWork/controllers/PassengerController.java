@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.entitys.Passenger;
+import com.mgWork.logger.MgLogger;
 import com.mgWork.service.PassengerService;
 
 @RestController
@@ -23,11 +24,13 @@ public class PassengerController {
 	private PassengerService passengerService;
 	@PostMapping("/addpassenger")
 	public ResponseEntity<Passenger> savePassenger(@RequestBody Passenger passenger) {
+		MgLogger.logAudit("savePassenger method invoked from controller");
 		return new ResponseEntity<Passenger>(passengerService.savePassenger(passenger),HttpStatus.CREATED);
 		
 	}
 	@GetMapping("/passengerlist")
 	List<Passenger> passengerListOfCustomer(Pageable pageable){
+		MgLogger.logAudit("passengerListOfCustomer method invoked from controller");
 		return passengerService.passengerListOfCustomer(pageable);
 		
 	}

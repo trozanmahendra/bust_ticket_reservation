@@ -18,6 +18,8 @@ public class Location {
 	
 	@Column(updatable = true,nullable = false,unique = true)
 	private String location;
+
+	
 	
 //	@OneToMany(cascade = CascadeType.ALL)
 //	private List<SubLocation> subLocs = new ArrayList<SubLocation>();

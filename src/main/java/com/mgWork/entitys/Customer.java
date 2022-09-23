@@ -69,4 +69,6 @@ public class Customer implements Serializable {
 		return "Customer [name=" + name + ", email=" + email + ", age=" + age + "]";
 	}
 
+	
+
 }
